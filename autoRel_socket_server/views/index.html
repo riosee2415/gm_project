@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/socket.io/socket.io.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Hello I'm Socket HTML file</h1>
+
+    <input type="text" id="txt" />
+    <input type="button" id="btn" value="전송" />
+
+    <hr />
+
+    <ul id="chat-room"></ul>
+  </body>
+
+  <script>
+    const txtDOM = document.getElementById("txt");
+    const btnDOM = document.getElementById("btn");
+    const chrDOM = document.getElementById("chat-room");
+
+    const socket = io();
+
+    btnDOM.addEventListener("click", () => {
+      socket.emit("message", txtDOM.value);
+    });
+
+    socket.on("message", (value) => {
+      const liTag = document.createElement("li");
+      liTag.innerText = value;
+
+      chrDOM.append(liTag);
+    });
+  </script>
+</html>
